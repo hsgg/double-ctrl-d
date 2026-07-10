@@ -1,10 +1,15 @@
 # double-ctrl-d
 
-Claude-code ignores the standard interface where a single Ctrl+D on an empty
+This is a vibe-coded workaround for
+https://github.com/anthropics/claude-code/issues/14027 . It wraps the call to
+claude, catches all input, and doubles every occurrence of Ctrl+D. Use at your
+own risk, obvs.
+
+## Background
+
+claude-code ignores the standard interface where a single Ctrl+D on an empty
 line exits the application. Instead, claude-code's "press ctrl+d again to exit"
-confirmation is hardcoded and can't be rebound via `keybindings.json`. The
-script `double-ctrl-d.sh` wraps `claude` in a pty and sends every Ctrl+D you
-type twice, so a single Ctrl+D exits like it does in any other TUI.
+confirmation is hardcoded and can't be rebound via `keybindings.json`.
 
 ## Requirements
 
@@ -33,7 +38,5 @@ Make sure `~/bin` comes before the real claude-code install directory in
 which -a claude
 ```
 
-You may need to `hash -r` or restart your shell first.
-
 You should see the shim (`~/bin/claude`) listed first, and the real binary
-after it.
+after it. You may need to `hash -r` or restart your shell first.
