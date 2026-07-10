@@ -18,9 +18,8 @@ your `PATH`.
 
 ```sh
 mkdir -p ~/bin
-cp double-ctrl-d.sh ~/bin/
-chmod +x ~/bin/double-ctrl-d.sh
-ln -s ~/bin/double-ctrl-d.sh ~/bin/claude
+cp double-ctrl-d.sh ~/bin/claude
+chmod +x ~/bin/claude
 ```
 
 Make sure `~/bin` comes before the real claude-code install directory in
