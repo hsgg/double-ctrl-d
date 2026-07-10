@@ -23,6 +23,9 @@ cp double-ctrl-d.sh ~/bin/claude
 chmod +x ~/bin/claude
 ```
 
+Alternatively, clone the repo and symlink `~/bin/claude` to the
+`double-ctrl-d.sh` script.
+
 Make sure `~/bin` comes before the real claude-code install directory in
 `PATH`. Verify with:
 
