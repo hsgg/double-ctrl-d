@@ -32,7 +32,3 @@ which -a claude
 
 You should see the shim (`~/bin/claude`) listed first, and the real binary
 after it.
-
-## License
-
-MIT — see [LICENSE](LICENSE).
