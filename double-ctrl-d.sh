@@ -32,12 +32,45 @@ then
 fi
 
 
+# claude-code is installed as a brew cask; check at most once a day whether
+# a newer version is available and offer to upgrade.
+check_for_update() {
+    command -v brew >/dev/null 2>&1 || return
+
+    local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/double-ctrl-d"
+    local cache_file="$cache_dir/last-update-check"
+    local now last
+    now=$(date +%s)
+    last=$(cat "$cache_file" 2>/dev/null || echo 0)
+
+    if (( now - last < 86400 ))
+    then
+        return
+    fi
+
+    mkdir -p "$cache_dir"
+    echo "$now" > "$cache_file"
+
+    if brew outdated --cask claude-code --quiet 2>/dev/null | grep -q .
+    then
+        local reply
+        read -r -p "note: a newer claude-code is available — update now? [y/N] " reply < /dev/tty > /dev/tty
+        if [[ "$reply" =~ ^[Yy]$ ]]
+        then
+            brew upgrade --cask claude-code
+        fi
+    fi
+}
+
+
 # Without a terminal on both ends claude runs non-interactively anyway;
 # pass pipes/redirections through untouched.
 if ! test -t 0 || ! test -t 1
 then
     exec "$EXEC" "$@"
 fi
+
+check_for_update
 
 exec expect -f <(cat <<'EOF'
 spawn -noecho {*}$argv
